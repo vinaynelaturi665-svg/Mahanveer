@@ -1,0 +1,18 @@
+import numpy as np
+import anfis
+from skfuzzy import control as ctrl
+
+# Sample sensor data
+wind_speed = np.array([0, 5, 10, 15, 20])
+gas_density = np.array([0, 200, 400, 600, 800])
+charging_rate = np.array([0, 20, 40, 70, 100])
+
+# ANFIS model
+model = anfis.ANFIS(wind_speed, gas_density, charging_rate)
+model.trainHybridJangOffLine(epochs=20)
+
+# Predict for new sensor input
+new_wind = 12
+new_gas = 500
+predicted_rate = model.predict(np.array([new_wind, new_gas]))
+print("Predicted Charging Rate:", predicted_rate)
